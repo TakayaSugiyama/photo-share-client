@@ -3,6 +3,7 @@ import { withRouter } from "../hooks/withRouter";
 import { useNavigate } from "react-router-dom";
 import { githubAuth } from "../mutation/";
 import { useMutation } from "@apollo/client";
+import Me from "../components/Me";
 
 const AuthorizedUser = (props) => {
   const [signingIn, setSigningIn] = useState(false);
@@ -15,6 +16,7 @@ const AuthorizedUser = (props) => {
         localStorage.setItem("token", data.githubAuth.token);
         navigate("/", { replace: true });
         setSigningIn(false);
+        window.location.reload();
       },
     }
   );
@@ -38,9 +40,14 @@ const AuthorizedUser = (props) => {
   };
 
   return (
-    <button onClick={() => requestCode()} disabled={signingIn}>
-      Sign In With GitHub
-    </button>
+    <Me
+      logout={() => {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }}
+      requestCode={requestCode}
+      signingIn={signingIn}
+    />
   );
 };
 
