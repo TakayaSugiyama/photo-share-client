@@ -8,11 +8,13 @@ const Users = () => {
   if (loading) return <p>loading</p>;
   if (error) return <p>error</p>;
   return (
-    <UserList
-      count={data.totalUsers}
-      users={data.allUsers}
-      refetchUsers={refetch}
-    />
+    <>
+      <UserList
+        count={data.totalUsers}
+        users={data.allUsers}
+        refetchUsers={refetch}
+      />
+    </>
   );
 };
 

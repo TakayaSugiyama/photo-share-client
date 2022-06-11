@@ -1,8 +1,15 @@
 import "./App.css";
-import Users from "./components/Users";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UsersPage from "./pages/UsersPage";
 
 function App() {
-  return <Users />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<UsersPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
