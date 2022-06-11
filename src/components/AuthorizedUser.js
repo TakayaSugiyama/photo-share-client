@@ -8,20 +8,23 @@ const AuthorizedUser = (props) => {
   const [signingIn, setSigningIn] = useState(false);
   const navigate = useNavigate();
 
-  const [handleMutation, { data, loading, error }] = useMutation(githubAuth, {
-    update(cache, { data }) {
-      localStorage.setItem("toekn", data.githubAuth.token);
-      navigate("/", { replace: true });
-      setSigningIn(false);
-    },
-  });
+  const [handleLoginMutation, { data, loading, error }] = useMutation(
+    githubAuth,
+    {
+      update(cache, { data }) {
+        localStorage.setItem("token", data.githubAuth.token);
+        navigate("/", { replace: true });
+        setSigningIn(false);
+      },
+    }
+  );
 
   useEffect(() => {
     if (window.location.search.match(/code=/)) {
       setSigningIn(true);
       const code = window.location.search.replace("?code=", "");
       navigate("/", { replace: true });
-      handleMutation({
+      handleLoginMutation({
         variables: {
           code: code,
         },
