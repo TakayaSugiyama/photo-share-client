@@ -7,7 +7,7 @@ import { allUsers } from "../query";
 const UserList = ({ count, users, refetchUsers }) => {
   const [handleCreateUsers, { data, loading, error }] = useMutation(
     addFakeUsers,
-    { refetchQueries: [allUsers], count: 1 }
+    { refetchQueries: [{ query: allUsers }], variables: { count: 1 } }
   );
   return (
     <>

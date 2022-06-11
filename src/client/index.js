@@ -9,9 +9,8 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
-const token = localStorage.getItem("token");
-
 const authMiddleware = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("token");
   operation.setContext({
     headers: {
       Authorization: `${token}`,
