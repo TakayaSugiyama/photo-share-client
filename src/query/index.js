@@ -4,9 +4,16 @@ export const allUsers = gql`
   query allUsers {
     totalUsers
     allUsers {
-      githubLogin
-      name
-      avatar
+      ...userList
     }
+    me {
+      ...userList
+    }
+  }
+
+  fragment userList on User {
+    githubLogin
+    name
+    avatar
   }
 `;
