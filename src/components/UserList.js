@@ -5,10 +5,22 @@ import { addFakeUsers } from "../mutation";
 import { allUsers } from "../query";
 
 const UserList = ({ count, users, refetchUsers }) => {
-  const [handleCreateUsers, { data, loading, error }] = useMutation(
-    addFakeUsers,
-    { refetchQueries: [{ query: allUsers }], variables: { count: 1 } }
-  );
+  const [handleCreateUsers, data] = useMutation(addFakeUsers, {
+    variables: { count: 1 },
+    update: (cache, { data: { addFakeUsers } }) => {
+      const cacheData = cache.readQuery({
+        query: allUsers,
+      });
+      cache.writeQuery({
+        query: allUsers,
+        data: {
+          allUsers: cacheData.allUsers.concat(addFakeUsers),
+          me: cacheData.me,
+          totalUsers: cacheData.totalUsers + addFakeUsers.length,
+        },
+      });
+    },
+  });
   return (
     <>
       <p>{count} users</p>
